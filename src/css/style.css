@@ -91,6 +91,12 @@ button {
   font-size: var(--large-font);
   cursor: pointer;
 }
+button:hover {
+  background: #77850d;
+}
+button:active {
+  background: #3d4406;
+}
 .divider {
   border-bottom: 2px solid var(--primary-color);
 }
