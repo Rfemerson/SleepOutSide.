@@ -1,3 +1,3 @@
 import productList from "./productList.mjs";
 
-await productList(".product-list", "tents", 4);
+productList(".product-list", "tents", 4);
