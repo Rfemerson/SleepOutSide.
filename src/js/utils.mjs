@@ -25,7 +25,7 @@ export function setClick(selector, callback) {
 export function getParam(param){
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
-  const product = urlParams.get('product');
+  const product = urlParams.get("product");
   return urlParams.get(param);
 }
 
@@ -35,4 +35,37 @@ export function renderListWithTemplate(templateFn, parentElement, listOfItems, l
     }
     const htmlString = listOfItems.slice(0,limit).map(templateFn);
     parentElement.insertAdjacentHTML(position, htmlString.join(""));
+}
+
+export function renderWithTemplate(templateFn, parentElement, data, callback, limit, position = "afterbegin", clear = true) {
+  if (clear) {
+      parentElement.innerHTML = "";
+  }
+  const htmlString = data.slice(0, limit).map(templateFn);
+  parentElement.insertAdjacentHTML(position, htmlString.join(""));
+  if (callback)  {
+    callback(data);
+  }
+}
+
+function loadTemplate(path) {
+
+  return async function () {
+    const res = await fetch(path);
+    if (res.ok) {
+      const html = await res.text();
+      return html;
+    }
+  };
+}
+
+export async function loadHeaderFooter() {
+
+  const headerTemplateFn = loadTemplate("/partials/header.html");
+  const footerTemplateFn = loadTemplate("/partials/footer.html");
+  const headerEl = document.querySelector("#main-header");
+  const footerEl = document.querySelector("#main-footer");
+  renderWithTemplate(headerTemplateFn, headerEl);
+  renderWithTemplate(footerTemplateFn, footerEl);
+  
 }
