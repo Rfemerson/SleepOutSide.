@@ -31,16 +31,17 @@ export function getParam(param){
 
 export function renderListWithTemplate(
   templateFn,
-  parentElement,
-  list,
-  position = "afterbegin",
+  parentElement, 
+  listOfItems, 
+  limit, 
+  position = "afterbegin", 
   clear = true
-) {
-  if (clear) {
-    parentElement.innerHTML = "";
-  }
-  const htmlString = list.map(templateFn);
-  parentElement.insertAdjacentHTML(position, htmlString.join(""));
+  ) {
+    if (clear) {
+      parentElement.innerHTML = "";
+    }
+    const htmlString = listOfItems.slice(0,limit).map(templateFn);
+    parentElement.insertAdjacentHTML(position, htmlString.join(""));
 }
 
 export function renderWithTemplate(
