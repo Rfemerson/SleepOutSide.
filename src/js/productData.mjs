@@ -1,15 +1,20 @@
 function convertToJson(res) {
-  if (res.ok) {
-    return res.json();
-  } else {
-    throw new Error("Bad Response");
+  try {
+    if (res.ok) {
+      return res.json();
+    } else {
+      throw new Error("Bad Response");
+    }
+  } catch (error) {
+    console.error("Error: " + error);
+    return undefined;
   }
 }
 
 export async function getData(category = "tents") {
   return fetch(`../json/${category}.json`)
     .then(convertToJson)
-    .then((data) => data);
+    .then((data) => data);    
 }
 
 export async function findProductById(id) {

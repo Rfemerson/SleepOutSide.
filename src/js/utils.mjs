@@ -33,8 +33,16 @@ export function renderListWithTemplate(templateFn, parentElement, listOfItems, l
     if (clear) {
       parentElement.innerHTML = "";
     }
-    const htmlString = listOfItems.slice(0,limit).map(templateFn);
-    parentElement.insertAdjacentHTML(position, htmlString.join(""));
+    if(listOfItems === undefined || listOfItems.length == 0) {
+      const htmlString = "<h3>There's no items to show</h3>";
+      parentElement.insertAdjacentHTML(position, htmlString);
+    } else if(listOfItems['Result'] === undefined) {
+      const htmlString = listOfItems.slice(0,limit).map(templateFn);
+      parentElement.insertAdjacentHTML(position, htmlString.join(""));
+    } else {
+      const htmlString = listOfItems['Result'].slice(0,limit).map(templateFn);
+      parentElement.insertAdjacentHTML(position, htmlString.join(""));
+    }
 }
 
 export function renderWithTemplate(templateFn, parentElement, position = "afterbegin", clear = true) {
